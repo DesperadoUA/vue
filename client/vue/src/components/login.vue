@@ -37,8 +37,19 @@
             }
         },
         methods: {
-            sendData(){
-                console.log(this.login, this.password)
+           async sendData(){
+                const API_URL = 'http://localhost:3000/api'
+                const login = this.login
+                const password = this.password
+
+                const result = await fetch(API_URL, {
+						method: 'POST',
+						body: JSON.stringify({login, password})
+					}
+				)
+					.then(response => response.json())
+					.then( data => data )
+                console.log(result)
             }
         }
     }
