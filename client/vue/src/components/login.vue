@@ -21,7 +21,7 @@
                     >
                 </div>
                 <button class="submit_mm">Login</button>
-                <div class="error_block"></div>
+                <div class="error_block" v-if="error">Логин или пароль не верный</div>
             </form>
         </div>
     </main>
@@ -34,18 +34,22 @@
         data(){
             return {
                 login: '',
-                password: ''
+                password: '',
+                error: false
             }
         },
         methods: {
            async sendData(){
-               const API_URL = 'http://localhost:3000/api-login'
                const login = this.login
                const password = this.password
-               const result = await DAL_Login.checkLogin(API_URL, login, password)
+               const result = await DAL_Login.checkLogin(login, password)
 
-               if(result.data.confirm === 'ok') console.log('Login')
-               else console.log('error')
+               if(result.data.confirm === 'ok') { localStorage.setItem('status', result.data.status)
+                   this.$router.push('list')
+               }
+               else { console.log('false login')
+                   this.error = true
+               }
             }
         }
     }

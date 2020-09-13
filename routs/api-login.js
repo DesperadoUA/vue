@@ -3,16 +3,16 @@ const router = Router()
 const UsersModel = require('../models/users')
 
 router.post('/', async (req, res) => {
-	const data_post = {
+	const data = {
 		'status': '',
 		'confirm': 'not found'
 	}
 	const [rows] = await UsersModel.checkLogin(req.body.login, req.body.password)
 	if(rows) {
-		data_post.status = rows.status
-		data_post.confirm = 'ok'
+		data.status = rows.status
+		data.confirm = 'ok'
 	}
-	res.send(JSON.stringify(data_post))
+	res.send(JSON.stringify(data))
 })
 
 module.exports = router
